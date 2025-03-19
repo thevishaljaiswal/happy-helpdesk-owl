@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { X, Paperclip, PaperPlane, Bold, Italic, List, Heading, Image } from 'lucide-react';
+import { X, Paperclip, Send, Bold, Italic, List, Heading, Image } from 'lucide-react';
 import { EmailType } from '@/utils/dummyData';
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
@@ -128,7 +128,7 @@ Mobile: +1 123-456-7890
             onClick={handleSend}
             className="bg-mail-blue hover:bg-blue-700 transition-colors"
           >
-            <PaperPlane className="h-4 w-4 mr-1" />
+            <Send className="h-4 w-4 mr-1" />
             Send
           </Button>
         </div>
