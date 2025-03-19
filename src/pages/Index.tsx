@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Sidebar from '@/components/layout/Sidebar';
 import EmailView from '@/components/layout/EmailView';
+import TicketSection from '@/components/tickets/TicketSection';
 
 const Index = () => {
   const location = useLocation();
@@ -40,6 +41,10 @@ const Index = () => {
   return (
     <div className="flex flex-col h-screen bg-gray-50">
       <Header />
+      
+      <div className="container mx-auto px-4 py-6 max-w-7xl">
+        <TicketSection />
+      </div>
       
       <div className="flex flex-1 overflow-hidden">
         {/* On mobile: Show either sidebar or email detail based on selection */}
