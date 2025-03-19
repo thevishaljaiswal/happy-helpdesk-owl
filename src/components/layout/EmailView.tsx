@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { ReplyAll, Reply, Forward, MoreHorizontal, Archive, X } from 'lucide-react';
 import EmailDetail from '../emails/EmailDetail';
 import ReplyComposer from '../emails/ReplyComposer';
+import TicketSection from '../tickets/TicketSection';
 import { Button } from "@/components/ui/button";
 import { emails } from '@/utils/dummyData';
 
@@ -62,6 +63,11 @@ const EmailView: React.FC<EmailViewProps> = ({ emailId, onClose }) => {
       </div>
       
       <div className="p-4 md:p-6">
+        {/* Add TicketSection at the top of the email body */}
+        <div className="mb-6 border-b pb-6">
+          <TicketSection />
+        </div>
+        
         <EmailDetail email={email} />
         
         <div className="flex flex-wrap gap-2 mt-6 mb-4">
