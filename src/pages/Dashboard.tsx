@@ -8,10 +8,13 @@ import {
   AlertTriangle, 
   CheckCircle, 
   BarChart3,
-  Mail
+  Mail,
+  ArrowUpRight
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 
 const Dashboard: React.FC = () => {
   // Sample stats for dashboard
@@ -53,6 +56,55 @@ const Dashboard: React.FC = () => {
     { name: "Account Issues", percentage: 15 },
     { name: "Feature Requests", percentage: 10 },
     { name: "Other", percentage: 5 }
+  ];
+  
+  // Sample escalated tickets data
+  const escalatedTickets = [
+    {
+      id: "HD-1089",
+      title: "Unable to access customer database",
+      priority: "Critical",
+      escalatedTo: "Head of Department",
+      timeToResolve: "4h remaining",
+      owner: "Sarah Chen",
+      department: "IT Support"
+    },
+    {
+      id: "HD-1045",
+      title: "Payment gateway integration failure",
+      priority: "High",
+      escalatedTo: "General Manager",
+      timeToResolve: "2h remaining",
+      owner: "Michael Rodriguez",
+      department: "Payments"
+    },
+    {
+      id: "HD-1092",
+      title: "Data synchronization error affecting customer accounts",
+      priority: "Critical",
+      escalatedTo: "VP",
+      timeToResolve: "12h remaining",
+      owner: "James Wilson",
+      department: "Data Operations"
+    },
+    {
+      id: "HD-1076",
+      title: "Security vulnerability in user authentication",
+      priority: "High",
+      escalatedTo: "General Manager",
+      timeToResolve: "6h remaining",
+      owner: "Emma Johnson",
+      department: "Security"
+    },
+    {
+      id: "HD-1103",
+      title: "Production server outage affecting 30% of users",
+      priority: "Critical",
+      escalatedTo: "CEO",
+      timeToResolve: "1h remaining",
+      owner: "David Patel",
+      department: "Infrastructure"
+    }
   ];
 
   return (
@@ -115,69 +167,75 @@ const Dashboard: React.FC = () => {
             </CardContent>
           </Card>
 
-          {/* Agent Performance */}
+          {/* Escalated Tickets Dashboard - New Component */}
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg font-medium">
-                <div className="flex items-center gap-2">
-                  <Users className="h-5 w-5" />
-                  <span>Top Performing Agents</span>
-                </div>
+              <CardTitle className="text-lg font-medium flex items-center gap-2">
+                <ArrowUpRight className="h-5 w-5 text-red-500" />
+                <span>Escalated Tickets</span>
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-600">
-                      JS
-                    </div>
-                    <div>
-                      <div className="font-medium">Jane Smith</div>
-                      <div className="text-xs text-gray-500">42 tickets resolved</div>
-                    </div>
-                  </div>
-                  <div className="text-green-500 text-sm font-medium">98% satisfaction</div>
-                </div>
-                
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600">
-                      JD
-                    </div>
-                    <div>
-                      <div className="font-medium">John Doe</div>
-                      <div className="text-xs text-gray-500">38 tickets resolved</div>
-                    </div>
-                  </div>
-                  <div className="text-green-500 text-sm font-medium">95% satisfaction</div>
-                </div>
-                
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center text-purple-600">
-                      AT
-                    </div>
-                    <div>
-                      <div className="font-medium">Alice Thompson</div>
-                      <div className="text-xs text-gray-500">35 tickets resolved</div>
-                    </div>
-                  </div>
-                  <div className="text-green-500 text-sm font-medium">96% satisfaction</div>
-                </div>
-                
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center text-amber-600">
-                      RM
-                    </div>
-                    <div>
-                      <div className="font-medium">Robert Miller</div>
-                      <div className="text-xs text-gray-500">32 tickets resolved</div>
-                    </div>
-                  </div>
-                  <div className="text-green-500 text-sm font-medium">94% satisfaction</div>
-                </div>
+              <div className="text-xs text-gray-500 mb-3">
+                Showing tickets escalated to stakeholders that require immediate attention
+              </div>
+              <div className="overflow-auto max-h-[250px] pr-2">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="w-[80px]">ID</TableHead>
+                      <TableHead>Issue</TableHead>
+                      <TableHead className="text-right">Escalated To</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {escalatedTickets.map((ticket) => (
+                      <TableRow key={ticket.id}>
+                        <TableCell className="font-medium">{ticket.id}</TableCell>
+                        <TableCell>
+                          <HoverCard>
+                            <HoverCardTrigger asChild>
+                              <div className="cursor-help">
+                                <div className="font-medium text-sm truncate max-w-[180px]">
+                                  {ticket.title}
+                                </div>
+                                <div className={`text-xs ${
+                                  ticket.priority === 'Critical' ? 'text-red-500' : 'text-amber-500'
+                                }`}>
+                                  {ticket.priority} • {ticket.timeToResolve}
+                                </div>
+                              </div>
+                            </HoverCardTrigger>
+                            <HoverCardContent className="w-80">
+                              <div className="space-y-2">
+                                <h4 className="font-semibold">{ticket.title}</h4>
+                                <div className="text-sm grid grid-cols-2 gap-1">
+                                  <div className="text-gray-500">Owner:</div>
+                                  <div>{ticket.owner}</div>
+                                  <div className="text-gray-500">Department:</div>
+                                  <div>{ticket.department}</div>
+                                  <div className="text-gray-500">Priority:</div>
+                                  <div className={`${
+                                    ticket.priority === 'Critical' ? 'text-red-500' : 'text-amber-500'
+                                  }`}>{ticket.priority}</div>
+                                </div>
+                              </div>
+                            </HoverCardContent>
+                          </HoverCard>
+                        </TableCell>
+                        <TableCell className="text-right">
+                          <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                            ticket.escalatedTo === 'CEO' ? 'bg-red-100 text-red-800' : 
+                            ticket.escalatedTo === 'VP' ? 'bg-orange-100 text-orange-800' :
+                            'bg-blue-100 text-blue-800'
+                          }`}>
+                            {ticket.escalatedTo}
+                          </span>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
               </div>
             </CardContent>
           </Card>
