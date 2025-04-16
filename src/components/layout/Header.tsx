@@ -1,7 +1,6 @@
 
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { ChevronDown, Filter, Search, LayoutDashboard } from 'lucide-react';
+import { ChevronDown, Filter, Search } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 
 const Header: React.FC = () => {
@@ -21,13 +20,6 @@ const Header: React.FC = () => {
       </div>
       
       <div className="flex items-center space-x-2">
-        <Link to="/dashboard" className="mr-2">
-          <Button variant="outline" size="sm" className="flex items-center gap-1">
-            <LayoutDashboard className="h-4 w-4" />
-            <span className="hidden md:inline">Dashboard</span>
-          </Button>
-        </Link>
-        
         <div className="relative hidden md:block">
           <Search className="h-4 w-4 text-gray-500 absolute left-3 top-1/2 transform -translate-y-1/2" />
           <input

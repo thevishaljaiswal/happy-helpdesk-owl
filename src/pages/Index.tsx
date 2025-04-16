@@ -1,12 +1,12 @@
-
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Sidebar from '@/components/layout/Sidebar';
 import EmailView from '@/components/layout/EmailView';
 
 const Index = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const [isMobileView, setIsMobileView] = useState(window.innerWidth < 768);
   const [showEmailDetail, setShowEmailDetail] = useState(false);
   
@@ -29,8 +29,7 @@ const Index = () => {
   }, [selectedEmailId]);
   
   const handleCloseEmailDetail = () => {
-    // Don't navigate, just update the URL without causing a full navigation
-    window.history.pushState({}, '', '/helpdesk');
+    navigate('/');
     setShowEmailDetail(false);
   };
   
