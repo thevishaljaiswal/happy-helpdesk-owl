@@ -3,8 +3,11 @@ import React, { useState } from 'react';
 import TicketForm from './TicketForm';
 import TicketInfoCard from './TicketInfoCard';
 import EscalationTimeline from './EscalationTimeline';
+import CollaboratorForm from './CollaboratorForm';
+import CollaboratorList from './CollaboratorList';
 import { Button } from "@/components/ui/button";
-import { ChevronDown, ChevronUp } from 'lucide-react';
+import { ChevronDown, ChevronUp, UserPlus } from 'lucide-react';
+import { sampleCollaborators } from './CollaboratorForm';
 
 // Sample ticket data
 const sampleTicket = {
@@ -22,6 +25,13 @@ const sampleTicket = {
 const TicketSection: React.FC = () => {
   const [showTicketForm, setShowTicketForm] = useState(false);
   const [showTicketInfo, setShowTicketInfo] = useState(true);
+  const [showCollaboratorForm, setShowCollaboratorForm] = useState(false);
+  const [collaborators, setCollaborators] = useState(sampleCollaborators);
+  const [showCollaborators, setShowCollaborators] = useState(true);
+  
+  const handleAddCollaborator = (newCollaborator: any) => {
+    setCollaborators([...collaborators, newCollaborator]);
+  };
   
   return (
     <div className="space-y-4 bg-gray-50 rounded-lg p-4">
@@ -78,6 +88,61 @@ const TicketSection: React.FC = () => {
           <EscalationTimeline createdAt={sampleTicket.createdAt} />
         </div>
       )}
+
+      {/* Collaborator Section */}
+      <div className="border-t pt-4 mt-4">
+        <div className="flex items-center justify-between mb-3">
+          <h3 className="text-md font-medium">Collaborators</h3>
+          <div className="flex gap-2">
+            <Button
+              onClick={() => setShowCollaboratorForm(!showCollaboratorForm)}
+              variant="outline"
+              size="sm"
+              className="flex items-center gap-1"
+            >
+              <UserPlus className="h-4 w-4" />
+              {showCollaboratorForm ? 'Cancel' : 'Add Collaborator'}
+            </Button>
+            {showCollaborators && (
+              <Button 
+                onClick={() => setShowCollaborators(false)}
+                variant="ghost"
+                size="sm"
+                className="text-gray-500 hover:text-gray-700"
+              >
+                Hide Collaborators
+              </Button>
+            )}
+            {!showCollaborators && (
+              <Button 
+                onClick={() => setShowCollaborators(true)}
+                variant="ghost"
+                size="sm"
+                className="text-gray-500 hover:text-gray-700"
+              >
+                Show Collaborators
+              </Button>
+            )}
+          </div>
+        </div>
+
+        {/* Collaborator Form */}
+        {showCollaboratorForm && (
+          <div className="animate-accordion-down mb-4">
+            <CollaboratorForm 
+              onAddCollaborator={handleAddCollaborator}
+              onCancel={() => setShowCollaboratorForm(false)}
+            />
+          </div>
+        )}
+
+        {/* Collaborator List */}
+        {showCollaborators && !showCollaboratorForm && (
+          <div className="animate-accordion-down">
+            <CollaboratorList collaborators={collaborators} />
+          </div>
+        )}
+      </div>
     </div>
   );
 };

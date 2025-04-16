@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Header from '@/components/layout/Header';
@@ -11,11 +10,9 @@ const Index = () => {
   const [isMobileView, setIsMobileView] = useState(window.innerWidth < 768);
   const [showEmailDetail, setShowEmailDetail] = useState(false);
   
-  // Get the currently selected email from URL params
   const searchParams = new URLSearchParams(location.search);
   const selectedEmailId = searchParams.get('email');
   
-  // Handle window resize
   useEffect(() => {
     const handleResize = () => {
       setIsMobileView(window.innerWidth < 768);
@@ -27,7 +24,6 @@ const Index = () => {
     };
   }, []);
   
-  // Update showEmailDetail based on selectedEmailId
   useEffect(() => {
     setShowEmailDetail(!!selectedEmailId);
   }, [selectedEmailId]);
@@ -42,7 +38,6 @@ const Index = () => {
       <Header />
       
       <div className="flex flex-1 overflow-hidden">
-        {/* On mobile: Show either sidebar or email detail based on selection */}
         {isMobileView ? (
           showEmailDetail ? (
             <EmailView emailId={selectedEmailId} onClose={handleCloseEmailDetail} />
@@ -50,7 +45,6 @@ const Index = () => {
             <Sidebar />
           )
         ) : (
-          // On desktop: Show both sidebar and email detail
           <>
             <Sidebar />
             <EmailView emailId={selectedEmailId} onClose={handleCloseEmailDetail} />
